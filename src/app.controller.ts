@@ -1,24 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
-import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
+import { CreateUserRequest, GetUserRequest } from './protos/users';
 
-import { AppService } from './app.service';
+import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @GrpcMethod('UsersService', 'GetUser')
+  findOne(data: GetUserRequest) {
+    return data;
   }
 
-  @GrpcMethod('HeroesService', 'FindOne')
-  findOne(data: any, metadata: Metadata, call: ServerUnaryCall<any, any>) {
-    const items = [
-      { id: 1, name: 'John' },
-      { id: 2, name: 'Doe' },
-    ];
-    return items.find(({ id }) => id === data.id);
+  @GrpcMethod('UsersService', 'CreateUser')
+  create(data: CreateUserRequest) {
+    return data;
   }
 }
