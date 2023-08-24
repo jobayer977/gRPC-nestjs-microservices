@@ -9,7 +9,7 @@ import { join } from 'path';
   imports: [
     ClientsModule.register([
       {
-        name: 'USERS_PACKAGE',
+        name: 'USERS_SERVICE',
         transport: Transport.GRPC,
         options: {
           package: 'users',
