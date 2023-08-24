@@ -1,17 +1,20 @@
-import { CreateUserRequest, GetUserRequest } from './protos/users';
+import { Controller, Get } from '@nestjs/common';
 
-import { Controller } from '@nestjs/common';
+import { AppService } from './app.service';
 import { GrpcMethod } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  @GrpcMethod('UsersService', 'GetUser')
-  findOne(data: GetUserRequest) {
-    return data;
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
   }
 
-  @GrpcMethod('UsersService', 'CreateUser')
-  create(data: CreateUserRequest) {
+  @GrpcMethod('UsersService', 'GetUser')
+  findOne(data) {
+    console.log(data);
     return data;
   }
 }
